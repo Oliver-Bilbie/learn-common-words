@@ -1,0 +1,54 @@
+service: learn-common-words
+plugins:
+    - serverless-iam-roles-per-function
+    - serverless-python-requirements
+custom:
+    appName: learn-common-words
+    serviceName: learn-common-words-backend
+    pythonRequirements:
+        slim: true
+        useDownloadCache: false
+        useStaticCache: false
+        usePipenv: false
+        layer:
+            name: requirements-layer
+            description: "Python requirements lambda layer"
+            compatibleRuntimes:
+                - python3.9
+provider:
+    name: aws
+    region: eu-west-1
+    runtime: python3.9
+    httpApi:
+        cors:
+            allowedOrigins:
+                - "*"
+                # - https://learn-common-words.net
+                # - https://dev.learn-common-words.net
+            allowedMethods:
+                - GET
+functions:
+    get_word:
+        handler: src/service/api.get_word
+        environment:
+            GERMAN_TABLE: learn-common-words-german-${env:STAGE}
+        package:
+            individually: true
+            include:
+                - src/service/*
+            exclude:
+                - ./**
+        memorySize: 128
+        events:
+            - httpApi:
+                  path: /{word_limit}
+                  method: get
+        timeout: 10
+        iamRoleStatementsName: learn-common-words-get-role-${env:STAGE}
+        iamRoleStatements:
+            - Effect: Allow
+              Action:
+                  - dynamodb:GetItem
+              Resource: arn:aws:dynamodb:eu-west-1:082862148481:table/learn-common-words-german-${env:STAGE}
+        layers:
+            - { Ref: PythonRequirementsLambdaLayer }
