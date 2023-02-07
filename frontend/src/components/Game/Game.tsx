@@ -1,4 +1,4 @@
-import React, { useState, useEffect, ReactElement } from "react";
+import React, { useState, useEffect, ReactElement, useRef } from "react";
 import { Box, Button, Heading, Text, Spinner } from "grommet";
 import { Close } from "grommet-icons";
 
@@ -7,12 +7,11 @@ import ProgressMeter from "../ProgressMeter/ProgressMeter";
 import { callApi } from "../../helpers/callApi";
 import { BASE_ENDPOINT } from "../../config";
 import { SortType } from "../../types";
-import ReactCanvasConfetti from "react-canvas-confetti";
+import Confetti from "react-confetti";
 
 const Game: React.FC = (): React.ReactElement => {
     const [wordLimit, setWordLimit] = useState(50);
     const [progress, setProgress] = useState(0);
-    const [confetti, setConfetti] = useState(false);
     const [loading, setLoading] = useState(true);
     const [alert, setAlert] = useState({ message: "", show: false });
     const [words, setWords] = useState({
@@ -30,14 +29,12 @@ const Game: React.FC = (): React.ReactElement => {
         color: "green",
     });
 
+    const confetti = useRef(false);
+
     useEffect(() => {
         // Load initial words
         callApi(`${BASE_ENDPOINT}/${wordLimit}`, handleApiResponse);
     }, []);
-
-    const fireConfetti = (): void => {
-        setConfetti(!confetti);
-    };
 
     const handleApiResponse = (response): void => {
         // Handles the response from the API
@@ -53,7 +50,7 @@ const Game: React.FC = (): React.ReactElement => {
         // Called when the user selects an answer
 
         if (selection === words.correct) {
-            fireConfetti();
+            confetti.current = true;
         }
         const newProgress =
             selection === words.correct
@@ -77,7 +74,16 @@ const Game: React.FC = (): React.ReactElement => {
     };
 
     return (
-        <Box fill>
+        <Box>
+            <Confetti
+                numberOfPieces={confetti ? 1000 : 0}
+                gravity={0.1}
+                recycle={false}
+                onConfettiComplete={(confetti: any): void => {
+                    confetti.current = false;
+                    confetti.reset();
+                }}
+            />
             <Box
                 width="medium"
                 height="600px"
@@ -165,7 +171,6 @@ const Game: React.FC = (): React.ReactElement => {
                     />
                 )}
             </Box>
-            <ReactCanvasConfetti fire={confetti} />
         </Box>
     );
 };
