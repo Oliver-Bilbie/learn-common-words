@@ -3,6 +3,19 @@
 set -Eeo pipefail
 
 
+##### Get parameters based on environment. This will be moved to SSM in the next update.
+if [ $STAGE == "prd" ]; then
+    DEPLOY_BUCKET_NAME="s3://learn-common-words.net"
+    TF_BUCKET_PATH="s3://terraform-state-yyq3vrfhye7d/learn-common-words/prd/"
+elif [ $STAGE == "dev" ]; then
+    DEPLOY_BUCKET_NAME="s3://dev.learn-common-words.net"
+    TF_BUCKET_PATH="s3://terraform-state-yyq3vrfhye7d/learn-common-words/dev/"
+else
+    echo "[ERROR] Invalid deployment stage ($STAGE)"
+    exit 1
+fi
+
+
 ##### Deploy the terraform #####
 cd terraform
 
@@ -64,6 +77,3 @@ yarn build:${STAGE}
 
 echo "[INFO] Writing frontend files to S3"
 aws s3 cp build $DEPLOY_BUCKET_NAME --recursive
-
-echo "[INFO] Invalidating Cloudfront cache"
-aws cloudfront create-invalidation --distribution-id $CF_DISTRIBUTION_ID --paths '/*'

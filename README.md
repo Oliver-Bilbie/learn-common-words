@@ -25,7 +25,7 @@ An endless quiz for learning the most common German words. Additional languages 
 ### Frontend
 
 The frontend is written using [React](https://reactjs.org/) with the code written in TypeScript. I have used the [Grommet](https://v2.grommet.io/) component library for UI elements as well as icons, and [React-Confetti](https://www.npmjs.com/package/react-confetti) to provide a confetti effect.
-The frontend is hosted from an [AWS S3](https://aws.amazon.com/s3/) bucket using the static website hosting functionality. This service does not support HTTPS connections, so I have used an [AWS Cloudfront](https://aws.amazon.com/cloudfront/) distribution along with AWS's certificate manager to provide this functionality.
+The frontend is hosted from an [AWS S3](https://aws.amazon.com/s3/) bucket using the static website hosting functionality.
 
 ### Backend
 
