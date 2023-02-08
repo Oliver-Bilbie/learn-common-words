@@ -8,7 +8,6 @@ if [ $STAGE == "prd" ]; then
     DEPLOY_BUCKET_NAME="s3://learn-common-words.net"
     TF_BUCKET_PATH="s3://terraform-state-yyq3vrfhye7d/learn-common-words/prd/"
 elif [ $STAGE == "dev" ]; then
-    exit 0
     DEPLOY_BUCKET_NAME="s3://dev.learn-common-words.net"
     TF_BUCKET_PATH="s3://terraform-state-yyq3vrfhye7d/learn-common-words/dev/"
 else
@@ -26,8 +25,8 @@ yum-config-manager --add-repo https://rpm.releases.hashicorp.com/AmazonLinux/has
 yum -y install terraform
 
 # Copy the tfstate and lock file from s3 - a bit of a hack until I put together something more elegant
-# aws s3 cp $TF_BUCKET_PATH"terraform.tfstate" "terraform.tfstate"
-# aws s3 cp $TF_BUCKET_PATH".terraform.lock.hcl" ".terraform.lock.hcl"
+aws s3 cp $TF_BUCKET_PATH"terraform.tfstate" "terraform.tfstate"
+aws s3 cp $TF_BUCKET_PATH".terraform.lock.hcl" ".terraform.lock.hcl"
 
 echo "[INFO] Removing cached terraform modules"
 rm -Rf .terraform/modules
