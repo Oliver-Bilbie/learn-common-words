@@ -25,8 +25,8 @@ yum-config-manager --add-repo https://rpm.releases.hashicorp.com/AmazonLinux/has
 yum -y install terraform
 
 # Copy the tfstate and lock file from s3 - a bit of a hack until I put together something more elegant
-# aws s3 cp $TF_BUCKET_PATH"terraform.tfstate" "terraform.tfstate"
-# aws s3 cp $TF_BUCKET_PATH".terraform.lock.hcl" ".terraform.lock.hcl"
+aws s3 cp $TF_BUCKET_PATH"terraform.tfstate" "terraform.tfstate"
+aws s3 cp $TF_BUCKET_PATH".terraform.lock.hcl" ".terraform.lock.hcl"
 
 echo "[INFO] Removing cached terraform modules"
 rm -Rf .terraform/modules

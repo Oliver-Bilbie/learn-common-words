@@ -1,14 +1,6 @@
 version: 0.2
 
 phases:
-  pre_build:
-    commands:
-      # Create build in progress badge
-      - |
-        if [ $STAGE == "prd" ]; then
-            curl -s "https://img.shields.io/badge/build-in%20progress-blue" > "build-status.svg"
-            aws s3 cp "build-status.svg" "s3://learn-common-words.net/build-status.svg" --cache-control no-cache
-        fi
   build:
     commands:
       - bash pipelines/ci.sh
