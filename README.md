@@ -9,7 +9,7 @@
 
 An endless quiz for learning the most common German words. Additional languages may follow in the future.
 
-### [Hosted here](https://learn-common-words.net)
+### [Hosted here](http://learn-common-words.net)
 
 ---
 
