@@ -7,6 +7,8 @@ install-deps:
 	@cd frontend && yarn --production
 
 install-dev-deps:
+	@echo "[INFO] Install pre-requisite dependencies"
+	@python -m pip install --no-input pipenv pre-commit
 	@echo "[INFO] Installing dev dependencies"
 	@cd backend && python -m pipenv install --dev
 	@cd frontend && yarn

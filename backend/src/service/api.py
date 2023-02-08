@@ -78,25 +78,31 @@ def get_word(event, context):
         raise ValidationException(f"Invalid word limit ({word_limit})")
 
     # Generate three random numbers
-    random_numbers = np.random.randint(1, word_limit+1, 3)
+    random_numbers = np.random.randint(1, word_limit + 1, 3)
     # Check that there are no duplicates
     for index in [1, 2]:
         while random_numbers[index] in random_numbers[:index]:
             # We do not need completely (pseudo-)random numbers
             # so we will just add 1 to any duplicated to cut down
             # on computation
-            random_numbers[index] = random_numbers[index] + 1 if random_numbers[index] < word_limit else 1
+            random_numbers[index] = (
+                random_numbers[index] + 1 if random_numbers[index] < word_limit else 1
+            )
 
     # Get words from the database
     words = []
     for index in range(0, 3):
-        words.append(german_table.get_item(Key={"frequency": int(random_numbers[index])}).get("Item"))
+        words.append(
+            german_table.get_item(Key={"frequency": int(random_numbers[index])}).get(
+                "Item"
+            )
+        )
 
     body = {
         "word": words[0].get("german"),
         "correct": words[0].get("english"),
         "decoy_1": words[1].get("english"),
-        "decoy_2": words[2].get("english")
+        "decoy_2": words[2].get("english"),
     }
 
     response = json.dumps({"response": body, "status": 200})

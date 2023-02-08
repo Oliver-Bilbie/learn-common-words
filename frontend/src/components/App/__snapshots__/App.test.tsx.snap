@@ -16,7 +16,7 @@ exports[`Matches snapshot 1`] = `
         <h2
           className="StyledHeading-sc-1rdh4aw-0 dvCPQZ"
         >
-          Flight Guesser
+          Learn Common Words
         </h2>
       </div>
       <div
@@ -96,45 +96,79 @@ exports[`Matches snapshot 1`] = `
       className="StyledBox-sc-13pk1d4-0 vYUEo"
     >
       <div
-        className="StyledStack-sc-ajspsk-0 RUPca"
+        className="StyledBox-sc-13pk1d4-0 dEaSmx"
       >
+        <canvas
+          height={768}
+          style={
+            Object {
+              "bottom": 0,
+              "left": 0,
+              "pointerEvents": "none",
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+              "zIndex": 2,
+            }
+          }
+          width={1024}
+        />
         <div
-          className="StyledStack__StyledStackLayer-sc-ajspsk-1 jvatDH"
+          className="StyledBox-sc-13pk1d4-0 iMXocp"
         >
           <div
-            className="StyledBox-sc-13pk1d4-0 eCzPCY"
+            className="StyledStack-sc-ajspsk-0 RUPca"
           >
             <div
-              className="StyledBox-sc-13pk1d4-0 kQWYGB"
-            >
-              <div
-                className="StyledBox-sc-13pk1d4-0 gaHiVX"
-              />
-            </div>
-            <button
-              className="StyledButton-sc-323bzc-0 gPymKT"
-              onBlur={[Function]}
-              onClick={[Function]}
-              onFocus={[Function]}
-              onMouseOut={[Function]}
-              onMouseOver={[Function]}
-              type="button"
+              className="StyledStack__StyledStackLayer-sc-ajspsk-1 jvatDH"
             >
               <svg
-                aria-label="Performance"
-                className="StyledIcon-sc-ofa7kd-0 jQvEgu"
-                viewBox="0 0 24 24"
+                className="StyledMeter-sc-nsxarx-0 kCzifM"
+                height={250}
+                viewBox="0 0 250 250"
+                width={250}
               >
-                <path
-                  d="m12 19-2 3-3-1-.5-3.5L3 17l-1-3 3-2-3-2 1-3 3.5-.5L7 3l3-1 2 3 2-3 3 1 .5 3.5L21 7l1 3-3 2 3 2-1 3-3.5.5L17 21l-3 1-2-3zm0-3a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"
+                <circle
+                  cx={125}
+                  cy={125}
                   fill="none"
-                  stroke="#000"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
+                  r={113}
+                  stroke="#dce1e1"
+                  strokeLinecap="square"
+                  strokeWidth={24}
                 />
               </svg>
-            </button>
+            </div>
+            <div
+              className="StyledStack__StyledStackLayer-sc-ajspsk-1 uboKz"
+            >
+              <div
+                className="StyledBox-sc-13pk1d4-0 iqDimR"
+              >
+                <span
+                  className="StyledText-sc-1sadyjn-0 jbJJSg"
+                >
+                  Learning the
+                </span>
+                <span
+                  className="StyledText-sc-1sadyjn-0 dxImJA"
+                >
+                  50
+                </span>
+                <span
+                  className="StyledText-sc-1sadyjn-0 jbJJSg"
+                >
+                  most common words
+                </span>
+              </div>
+            </div>
+          </div>
+          <div
+            className="StyledBox-sc-13pk1d4-0 iBwDxo"
+          >
+            <div
+              className="StyledBox-sc-13pk1d4-0 gaHiVX"
+            />
           </div>
         </div>
       </div>
