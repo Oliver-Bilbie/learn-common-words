@@ -7,9 +7,11 @@ set -Eeo pipefail
 if [ $STAGE == "prd" ]; then
     DEPLOY_BUCKET_NAME="s3://learn-common-words.net"
     TF_BUCKET_PATH="s3://terraform-state-yyq3vrfhye7d/learn-common-words/prd/"
+    CF_DISTRIBUTION_ID="E10DDAUK4G06OW"
 elif [ $STAGE == "dev" ]; then
     DEPLOY_BUCKET_NAME="s3://dev.learn-common-words.net"
     TF_BUCKET_PATH="s3://terraform-state-yyq3vrfhye7d/learn-common-words/dev/"
+    CF_DISTRIBUTION_ID="E1TUWRN0Y8YSU1"
 else
     echo "[ERROR] Invalid deployment stage ($STAGE)"
     exit 1
@@ -77,3 +79,6 @@ yarn build:${STAGE}
 
 echo "[INFO] Writing frontend files to S3"
 aws s3 cp build $DEPLOY_BUCKET_NAME --recursive
+
+echo "[INFO] Invalidating Cloudfront cache"
+aws cloudfront create-invalidation --distribution-id $CF_DISTRIBUTION_ID --paths '/*'
