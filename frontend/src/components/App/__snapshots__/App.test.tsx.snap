@@ -114,7 +114,7 @@ exports[`Matches snapshot 1`] = `
           width={1024}
         />
         <div
-          className="StyledBox-sc-13pk1d4-0 iMXocp"
+          className="StyledBox-sc-13pk1d4-0 gHXCVM"
         >
           <div
             className="StyledStack-sc-ajspsk-0 RUPca"
@@ -137,6 +137,13 @@ exports[`Matches snapshot 1`] = `
                   strokeLinecap="square"
                   strokeWidth={24}
                 />
+                <path
+                  d="M 58.5802664910 33.5810796356 A 113.0000000000 113.0000000000 0 1 0 125.0000000000 12.0000000000"
+                  fill="none"
+                  stroke="#67bdd7"
+                  strokeLinecap="butt"
+                  strokeWidth={24}
+                />
               </svg>
             </div>
             <div
@@ -153,7 +160,7 @@ exports[`Matches snapshot 1`] = `
                 <span
                   className="StyledText-sc-1sadyjn-0 dxImJA"
                 >
-                  50
+                  1000
                 </span>
                 <span
                   className="StyledText-sc-1sadyjn-0 jbJJSg"
@@ -164,7 +171,7 @@ exports[`Matches snapshot 1`] = `
             </div>
           </div>
           <div
-            className="StyledBox-sc-13pk1d4-0 iBwDxo"
+            className="StyledBox-sc-13pk1d4-0 knJrvA"
           >
             <div
               className="StyledBox-sc-13pk1d4-0 gaHiVX"
