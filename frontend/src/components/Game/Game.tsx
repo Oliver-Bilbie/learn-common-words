@@ -10,8 +10,8 @@ import { SortType } from "../../types";
 import Confetti from "react-confetti";
 
 const Game: React.FC = (): React.ReactElement => {
-  const [wordLimit, setWordLimit] = useState(1000);
-  const [progress, setProgress] = useState(199);
+  const [wordLimit, setWordLimit] = useState(50);
+  const [progress, setProgress] = useState(0);
   const [loading, setLoading] = useState(true);
   const [alert, setAlert] = useState({ message: "", show: false });
   const [words, setWords] = useState({
