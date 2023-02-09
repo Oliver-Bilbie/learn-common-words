@@ -16,7 +16,7 @@ const ProgressMeter: React.FC<ProgressMeterProps> = ({
         value={(progress % 10) * 10}
         type="circle"
         color="brand"
-        background="background"
+        background={progress === 200 ? "#5FED38" : "background"}
         size="250px"
       />
       <Box width="medium" align="center">
