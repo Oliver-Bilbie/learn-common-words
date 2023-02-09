@@ -1,6 +1,6 @@
 import React, { useState, useEffect, ReactElement, useRef } from "react";
 import { Box, Button, Heading, Text, Spinner } from "grommet";
-import { Close } from "grommet-icons";
+import { Refresh } from "grommet-icons";
 
 import PopupMenu from "../PopupMenu/PopupMenu";
 import ProgressMeter from "../ProgressMeter/ProgressMeter";
@@ -10,8 +10,8 @@ import { SortType } from "../../types";
 import Confetti from "react-confetti";
 
 const Game: React.FC = (): React.ReactElement => {
-  const [wordLimit, setWordLimit] = useState(50);
-  const [progress, setProgress] = useState(0);
+  const [wordLimit, setWordLimit] = useState(1000);
+  const [progress, setProgress] = useState(199);
   const [loading, setLoading] = useState(true);
   const [alert, setAlert] = useState({ message: "", show: false });
   const [words, setWords] = useState({
@@ -31,8 +31,8 @@ const Game: React.FC = (): React.ReactElement => {
 
   const confetti = useRef(false);
 
+  // Load initial words
   useEffect(() => {
-    // Load initial words
     callApi(`${BASE_ENDPOINT}/${wordLimit}`, handleApiResponse);
   }, []);
 
@@ -50,18 +50,18 @@ const Game: React.FC = (): React.ReactElement => {
   // Called when the user selects an answer
   const handleSelection = (selection: string): void => {
     // Update the player's progress
-    const newProgress =
-      selection === words.correct
-        ? progress + 1
-        : progress >= 5
-        ? progress - 5
-        : 0;
+    let newProgress: number;
+    if (selection === words.correct) {
+      newProgress = progress < 200 ? progress + 1 : 200;
+    } else {
+      newProgress = progress >= 5 ? progress - 5 : 0;
+    }
     setProgress(newProgress);
 
     // Update the player's word limit
-    const newWordLimit = 50 + 50 * Math.floor(newProgress / 10);
+    const newWordLimit =
+      newProgress < 200 ? 50 + 50 * Math.floor(newProgress / 10) : 1000;
     setWordLimit(newWordLimit);
-
     // Fire confetti if the word limit has increased this turn
     if (newWordLimit > wordLimit) {
       confetti.current = true;
@@ -93,7 +93,7 @@ const Game: React.FC = (): React.ReactElement => {
       />
       <Box
         width="medium"
-        height="600px"
+        height="650px"
         direction="column"
         align="center"
         alignSelf="center"
@@ -105,7 +105,7 @@ const Game: React.FC = (): React.ReactElement => {
         round
       >
         <ProgressMeter progress={progress} wordLimit={wordLimit} />
-        <Box height="250px" align="center" justify="center">
+        <Box height="300px" align="center" justify="center">
           {answer.show ? (
             <Box align="center">
               <Heading textAlign="center" margin={{ bottom: "xsmall" }}>
@@ -121,6 +121,7 @@ const Game: React.FC = (): React.ReactElement => {
               <Button
                 label="Next"
                 onClick={(): void => setAnswer({ ...answer, show: false })}
+                size="large"
               />
             </Box>
           ) : loading ? (
@@ -129,23 +130,32 @@ const Game: React.FC = (): React.ReactElement => {
             <Box align="center">
               <Heading textAlign="center">{words.word}</Heading>
               <Box gap="small">
-                {[words.correct, words.decoy_1, words.decoy_2]
-                  .map(
-                    (value: string): SortType => ({
-                      value,
-                      sort: Math.random(),
-                    })
-                  )
-                  .sort((a: SortType, b: SortType): number => a.sort - b.sort)
-                  .map(
-                    ({ value }: { value: string }): ReactElement => (
-                      <Button
-                        label={value}
-                        onClick={(): void => handleSelection(value)}
-                        key={`button-${value}`}
-                      />
+                {
+                  /*
+                                    Using a map function, we assign random numbers to each of the three word options.
+                                    We then sort by these random values and use another map function to return a
+                                    button for each word. This is done to randomize the order in which the buttons
+                                    are displayed.
+                                    */
+                  [words.correct, words.decoy_1, words.decoy_2]
+                    .map(
+                      (value: string): SortType => ({
+                        value,
+                        sort: Math.random(),
+                      })
                     )
-                  )}
+                    .sort((a: SortType, b: SortType): number => a.sort - b.sort)
+                    .map(
+                      ({ value }: { value: string }): ReactElement => (
+                        <Button
+                          label={value}
+                          onClick={(): void => handleSelection(value)}
+                          key={`button-${value}`}
+                          size="large"
+                        />
+                      )
+                    )
+                }
               </Box>
             </Box>
           )}
@@ -155,9 +165,12 @@ const Game: React.FC = (): React.ReactElement => {
             body={<Text>{alert.message}</Text>}
             buttons={[
               {
-                label: "Close",
-                icon: <Close />,
-                onClick: (): void => setAlert({ ...alert, show: false }),
+                label: "Retry",
+                icon: <Refresh />,
+                onClick: (): void => {
+                  callApi(`${BASE_ENDPOINT}/${wordLimit}`, handleApiResponse);
+                  setAlert({ ...alert, show: false });
+                },
               },
             ]}
           />
