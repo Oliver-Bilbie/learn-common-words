@@ -1,6 +1,13 @@
 version: 0.2
 
 phases:
+  install:
+    commands:
+      - curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh -s -- -y
+      - source $HOME/.cargo/env
+      - cargo install --locked trunk
+      - cargo install --locked wasm-bindgen-cli
+      - rustup target add wasm32-unknown-unknown
   build:
     commands:
       - bash pipelines/ci.sh
