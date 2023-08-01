@@ -1,0 +1,12 @@
+[package]
+name = "learn-common-words"
+version = "1.0.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+getrandom = { version = "0.2.10", features = ["js"] }
+rand = "0.8.5"
+serde_json = "1.0.104"
+yew = { version = "0.20.0", features = ["csr"] }

@@ -49,36 +49,12 @@ aws s3 cp ".terraform.lock.hcl" $TF_BUCKET_PATH".terraform.lock.hcl"
 cd ..
 
 
-##### Deploy the backend #####
-cd backend
-
-echo "[INFO] Installing serverless framework and required plugins"
-npm install
-
-echo "[INFO] Installing backend dependencies"
-python -m pipenv install
-
-echo "[INFO] Deploying backend to ${BUILD_ENV} environment"
-pipenv requirements > requirements.txt
-npx sls deploy -s ${STAGE}
-
-cd ..
-
-
 ##### Deploy the frontend #####
-# Set the version number in package.json from the root directory
-VERSION=$(sed 's/.*"version": "\(.*\)".*/\1/;t;d' ./package.json)
-sed -i 's/VERSION_NUMBER/'$VERSION'/g' ./frontend/package.json
-cd frontend
-
-echo "[INFO] Installing frontend dependencies"
-yarn --prod
-
 echo "[INFO] Building frontend"
-yarn build:${STAGE}
+make build
 
 echo "[INFO] Writing frontend files to S3"
-aws s3 cp build $DEPLOY_BUCKET_NAME --recursive
+aws s3 cp dist $DEPLOY_BUCKET_NAME --recursive
 
 echo "[INFO] Invalidating Cloudfront cache"
 aws cloudfront create-invalidation --distribution-id $CF_DISTRIBUTION_ID --paths '/*'
