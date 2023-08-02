@@ -20,7 +20,13 @@ pub fn LanguageSelect(props: &LanguageSelectProps) -> Html {
         set_target_language,
     } = props;
 
-    let options: Vec<String> = vec!["english".to_string(), "german".to_string()];
+    let options: Vec<String> = vec![
+        Languages::En.to_str().to_string(),
+        Languages::De.to_str().to_string(),
+        Languages::Fr.to_str().to_string(),
+        Languages::It.to_str().to_string(),
+        Languages::Es.to_str().to_string(),
+    ];
     let selected_src = format!("{}", source_language.to_str());
     let selected_trg = format!("{}", target_language.to_str());
     let set_source_language = set_source_language.clone();

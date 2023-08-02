@@ -7,6 +7,9 @@ use crate::helpers::word_list;
 pub enum Languages {
     En,
     De,
+    Fr,
+    It,
+    Es,
 }
 
 impl Languages {
@@ -14,6 +17,9 @@ impl Languages {
         match *self {
             Languages::En => "english",
             Languages::De => "german",
+            Languages::Fr => "french",
+            Languages::It => "italian",
+            Languages::Es => "spanish",
         }
     }
 
@@ -21,6 +27,9 @@ impl Languages {
         match lang.as_str() {
             "english" => Languages::En,
             "german" => Languages::De,
+            "french" => Languages::Fr,
+            "italian" => Languages::It,
+            "spanish" => Languages::Es,
             _ => Languages::En,
         }
     }
@@ -28,28 +37,28 @@ impl Languages {
 
 #[derive(Debug)]
 pub struct WordOptions {
-    pub native: String,
-    pub foreign_correct: String,
-    pub foreign_incorrect_1: String,
-    pub foreign_incorrect_2: String,
+    pub source: String,
+    pub target_correct: String,
+    pub target_incorrect_1: String,
+    pub target_incorrect_2: String,
 }
 
-pub fn get_words(native_lang: Languages, foreign_lang: Languages, freq_limit: i64) -> WordOptions {
+pub fn get_words(source_lang: Languages, target_lang: Languages, freq_limit: i64) -> WordOptions {
     let random_numbers = random::get_random_integers(freq_limit);
 
     let word_list: serde_json::Value = load_words();
 
     WordOptions {
-        native: word_list[random_numbers[0].to_string()][native_lang.to_str()]
+        source: word_list[random_numbers[0].to_string()][source_lang.to_str()]
             .to_string()
             .replace("\"", ""),
-        foreign_correct: word_list[random_numbers[0].to_string()][foreign_lang.to_str()]
+        target_correct: word_list[random_numbers[0].to_string()][target_lang.to_str()]
             .to_string()
             .replace("\"", ""),
-        foreign_incorrect_1: word_list[random_numbers[1].to_string()][foreign_lang.to_str()]
+        target_incorrect_1: word_list[random_numbers[1].to_string()][target_lang.to_str()]
             .to_string()
             .replace("\"", ""),
-        foreign_incorrect_2: word_list[random_numbers[2].to_string()][foreign_lang.to_str()]
+        target_incorrect_2: word_list[random_numbers[2].to_string()][target_lang.to_str()]
             .to_string()
             .replace("\"", ""),
     }

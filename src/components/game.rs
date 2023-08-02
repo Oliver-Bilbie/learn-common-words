@@ -56,7 +56,7 @@ pub fn Game(props: &GameProps) -> Html {
 
         move |_| {
             let updated_points;
-            if answer == words.foreign_correct {
+            if answer == words.target_correct {
                 updated_points = progress.total_points + 1;
             } else {
                 updated_points = if progress.total_points > 5 {
@@ -84,27 +84,27 @@ pub fn Game(props: &GameProps) -> Html {
                 text_progress={progress.total_points.to_string()}
                 bar_progress={progress.round_percentage}
             />
-            <h1 id="word-prompt">{ &words.native }</h1>
+            <h1 id="word-prompt">{ &words.source }</h1>
             <button
                 id={format!("button-{}", order[0])}
                 class="selection-button"
-                onclick={submit_answer(words.foreign_correct.to_string())}
+                onclick={submit_answer(words.target_correct.to_string())}
             >
-                { &words.foreign_correct }
+                { &words.target_correct }
             </button>
             <button
                 id={format!("button-{}",
                 order[1])} class="selection-button"
-                onclick={submit_answer(words.foreign_incorrect_1.to_string())}
+                onclick={submit_answer(words.target_incorrect_1.to_string())}
             >
-                { &words.foreign_incorrect_1 }
+                { &words.target_incorrect_1 }
             </button>
             <button
                 id={format!("button-{}", order[2])}
                 class="selection-button"
-                onclick={submit_answer(words.foreign_incorrect_2.to_string())}
+                onclick={submit_answer(words.target_incorrect_2.to_string())}
             >
-                { &words.foreign_incorrect_2 }
+                { &words.target_incorrect_2 }
             </button>
         </div>
     }
