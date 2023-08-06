@@ -78,7 +78,7 @@ pub fn Game(props: &GameProps) -> Html {
     };
 
     html! {
-        <div class="grid-container">
+        <div class="grid-container fade-in">
             <ProgressBar
                 id="progress-bar"
                 text_progress={progress.total_points.to_string()}

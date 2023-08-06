@@ -11,11 +11,11 @@ pub fn App() -> Html {
         LanguageSelect,
     }
 
-    let show_form = use_state(|| Form::Game);
+    let show_form = use_state(|| Form::LanguageSelect);
     let source_language = use_state(|| Languages::De);
     let target_language = use_state(|| Languages::En);
 
-    let toggle_show_form = {
+    let handle_change_form = {
         let show_form = show_form.clone();
         Callback::from(move |_| {
             show_form.set(match *show_form {
@@ -42,13 +42,6 @@ pub fn App() -> Html {
     html! {
         <div id="app">
             <div class="box">
-                <div class="box">
-                    <p>{"Show Language Select"}</p>
-                    <label class="switch">
-                        <input type="checkbox" onclick={toggle_show_form} />
-                        <span class="slider round" />
-                    </label>
-                </div>
                 {match *show_form {
                     Form::Game => html! {
                         <Game
@@ -65,6 +58,18 @@ pub fn App() -> Html {
                         />
                     },
                 }}
+                <div class="box">
+                    <button class="option_button fade-in" onclick={handle_change_form}>
+                        <p>
+                            {
+                                match *show_form {
+                                    Form::Game => "Change languages",
+                                    Form::LanguageSelect => "Start game",
+                                }
+                            }
+                        </p>
+                    </button>
+                </div>
             </div>
         </div>
     }

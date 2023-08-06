@@ -37,7 +37,7 @@ pub fn LanguageSelect(props: &LanguageSelectProps) -> Html {
         Callback::from(move |lang: String| set_target_language.emit(Languages::from_str(lang)));
 
     html! {
-        <div class="box">
+        <div class="box fade-in">
             <Dropdown
                 id={"src-lang-select"}
                 label={"Source Language"}
