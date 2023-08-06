@@ -29,6 +29,12 @@ impl Progress {
     }
 }
 
+#[derive(Copy, Clone)]
+enum RoundState {
+    Question,
+    Answer,
+}
+
 #[derive(Properties, PartialEq)]
 pub struct GameProps {
     pub source_language: Languages,
@@ -48,11 +54,12 @@ pub fn Game(props: &GameProps) -> Html {
     let progress = use_state(|| Progress::new(0));
     let words = use_state(|| get_words(source_language, target_language, 50));
     let order = use_state(|| get_random_integers(3));
+    let round_state = use_state(|| RoundState::Question);
 
     let submit_answer = |answer: String| {
-        let progress = progress.clone();
         let words = words.clone();
-        let order = order.clone();
+        let progress = progress.clone();
+        let round_state = round_state.clone();
 
         move |_| {
             let updated_points;
@@ -68,12 +75,24 @@ pub fn Game(props: &GameProps) -> Html {
 
             let updated_progress = Progress::new(updated_points);
             progress.set(updated_progress);
+            round_state.set(RoundState::Answer);
+        }
+    };
+
+    let acknowledge_answer = {
+        let words = words.clone();
+        let order = order.clone();
+        let progress = progress.clone();
+        let round_state = round_state.clone();
+
+        move |_| {
             words.set(get_words(
                 source_language,
                 target_language,
-                updated_progress.word_limit.into(),
+                progress.word_limit.into(),
             ));
             order.set(get_random_integers(3));
+            round_state.set(RoundState::Question);
         }
     };
 
@@ -85,27 +104,59 @@ pub fn Game(props: &GameProps) -> Html {
                 bar_progress={progress.round_percentage}
             />
             <h1 id="word-prompt">{ &words.source }</h1>
-            <button
-                id={format!("button-{}", order[0])}
-                class="selection-button"
-                onclick={submit_answer(words.target_correct.to_string())}
-            >
-                { &words.target_correct }
-            </button>
-            <button
-                id={format!("button-{}",
-                order[1])} class="selection-button"
-                onclick={submit_answer(words.target_incorrect_1.to_string())}
-            >
-                { &words.target_incorrect_1 }
-            </button>
-            <button
-                id={format!("button-{}", order[2])}
-                class="selection-button"
-                onclick={submit_answer(words.target_incorrect_2.to_string())}
-            >
-                { &words.target_incorrect_2 }
-            </button>
+            { match *round_state {
+                RoundState::Question => {
+                    html! {
+                        <>
+                            <button
+                                id={format!("button-{}", order[0])}
+                                class="selection-button"
+                                onclick={submit_answer(words.target_correct.to_string())}
+                            >
+                                { &words.target_correct }
+                            </button>
+                            <button
+                                id={format!("button-{}", order[1])} class="selection-button"
+                                onclick={submit_answer(words.target_incorrect_1.to_string())}
+                            >
+                                { &words.target_incorrect_1 }
+                            </button>
+                            <button
+                                id={format!("button-{}", order[2])}
+                                class="selection-button"
+                                onclick={submit_answer(words.target_incorrect_2.to_string())}
+                            >
+                                { &words.target_incorrect_2 }
+                            </button>
+                        </>
+                    }
+                },
+                RoundState::Answer => {
+                    html! {
+                        <>
+                            <button
+                                id={format!("button-{}", order[0])}
+                                class="selection-button selection-button-correct"
+                                onclick={acknowledge_answer}
+                            >
+                                { &words.target_correct }
+                            </button>
+                            <button
+                                id={format!("button-{}", order[1])} class="selection-button"
+                            >
+                                { &words.target_incorrect_1 }
+                            </button>
+                            <button
+                                id={format!("button-{}", order[2])}
+                                class="selection-button"
+                            >
+                                { &words.target_incorrect_2 }
+                            </button>
+                        </>
+                    }
+                },
+            }}
+
         </div>
     }
 }

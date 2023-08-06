@@ -57,3 +57,11 @@
 .selection-button:disabled {
   cursor: auto;
 }
+
+.selection-button-correct {
+  background-color: var(--correct);
+}
+
+.selection-button-correct:after {
+  background-color: var(--correct-light);
+}
