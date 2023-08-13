@@ -1,5 +1,10 @@
 version: 0.2
 
+env:
+  parameter-store:
+    DEPLOY_BUCKET_NAME: "learn-common-words-${STAGE}-host-bucket"
+    CF_DISTRIBUTION_ID: "learn-common-words-${STAGE}-cf-dist"
+
 phases:
   install:
     commands:

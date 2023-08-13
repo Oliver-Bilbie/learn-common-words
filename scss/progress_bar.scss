@@ -1,0 +1,30 @@
+.progress-bar {
+  border-radius: 50%;
+  width: 200px;
+  height: 200px;
+  display: flex;
+  background: var(--background);
+  align-items: center;
+  justify-content: center;
+  align-self: center;
+  justify-self: center;
+}
+
+.progress-bar-under-50 {
+  background-image: linear-gradient(calc(270deg + var(--progress)* 360deg / 100), var(--background) 50%, transparent 50%), linear-gradient(270deg, var(--accent) 50%, var(--background) 50%);
+}
+
+.progress-bar-over-50 {
+  background-image: linear-gradient(calc(90deg + var(--progress)* 360deg / 100), var(--accent) 50%, transparent 50%), linear-gradient(270deg, var(--accent) 50%, var(--background) 50%);
+}
+
+.progress-bar-overlay {
+  border-radius: 50%;
+  width: 150px;
+  height: 150px;
+  background: var(--foreground);
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

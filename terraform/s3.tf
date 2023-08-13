@@ -1,9 +1,15 @@
-resource "aws_s3_bucket" "deploy-bucket" {
-  bucket = "${var.bucket_name}"
+resource "aws_s3_bucket" "host-bucket" {
+  bucket = var.bucket_name
+}
+
+resource "aws_s3_bucket_public_access_block" "host-bucket-public-access" {
+  bucket              = aws_s3_bucket.host-bucket.id
+  block_public_acls   = false
+  block_public_policy = false
 }
 
 resource "aws_s3_bucket_policy" "allow_access" {
-  bucket = aws_s3_bucket.deploy-bucket.id
+  bucket = aws_s3_bucket.host-bucket.id
   policy = jsonencode({
     "Version" : "2012-10-17",
     "Statement" : [
@@ -12,14 +18,24 @@ resource "aws_s3_bucket_policy" "allow_access" {
         "Effect" : "Allow",
         "Principal" : "*",
         "Action" : "s3:GetObject",
-        "Resource" : "${aws_s3_bucket.deploy-bucket.arn}/*"
+        "Resource" : "${aws_s3_bucket.host-bucket.arn}/*"
       }
     ]
   })
 }
 
+resource "aws_s3_bucket_cors_configuration" "host-bucket-cors" {
+  bucket = aws_s3_bucket.host-bucket.id
+
+  cors_rule {
+    allowed_headers = ["*"]
+    allowed_methods = ["GET"]
+    allowed_origins = ["*"]
+  }
+}
+
 resource "aws_s3_bucket_website_configuration" "website-config" {
-  bucket = aws_s3_bucket.deploy-bucket.id
+  bucket = aws_s3_bucket.host-bucket.id
   index_document {
     suffix = "index.html"
   }

@@ -23,7 +23,7 @@ pub fn get_random_integers(max_value: i64) -> [i64; 3] {
         random_numbers[i] = rng.gen_range(1..max_value + 1);
         let mut duplicated = check_for_duplicate(random_numbers);
         while duplicated {
-            random_numbers[i] = if random_numbers[i] < max_value.try_into().unwrap() {
+            random_numbers[i] = if random_numbers[i] < max_value {
                 random_numbers[i] + 1
             } else {
                 1

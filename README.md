@@ -13,15 +13,6 @@ An endless quiz for learning the most common German words. Additional languages 
 
 ---
 
-## To Do:
-
-- Replace all *unwrap* statements with *expect* statements, and improve error handling.
-- Show the correct answer after selecting an option.
-- Build a HTML/CSS confetti effect to play when the score reaches a multiple of ten.
-- Add more languages.
-
----
-
 ## Architecture
 
 ### Frontend
