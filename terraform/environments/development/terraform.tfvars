@@ -1,4 +1,5 @@
 region = "eu-west-1"
 service = "learn-common-words"
 environment = "dev"
-bucket_name = "dev.learn-common-words.net"
+base_domain = "oliver-bilbie.co.uk"
+full_domain = "words-dev.oliver-bilbie.co.uk"
