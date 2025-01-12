@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "host-bucket" {
-  bucket = "${var.bucket_name}-${var.environment}"
+  bucket = "${var.service}-${var.environment}"
 }
 
 resource "aws_s3_bucket_public_access_block" "host-bucket-public-access" {
@@ -34,7 +34,7 @@ resource "aws_s3_bucket_cors_configuration" "host-bucket-cors" {
   }
 }
 
-resource "aws_s3_bucket_website_configuration" "website-config" {
+resource "aws_s3_bucket_website_configuration" "host-bucket-hosting-config" {
   bucket = aws_s3_bucket.host-bucket.id
   index_document {
     suffix = "index.html"
