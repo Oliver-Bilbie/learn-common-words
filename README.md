@@ -1,6 +1,6 @@
 # Learn Common Words
 
-![Build-Status](https://s3.eu-west-1.amazonaws.com/learn-common-words.net/build-status.svg?)
+![Build-Status](https://s3.eu-west-1.amazonaws.com/learn-common-words-prd/build-status.svg?)
 [![Last-Commit](https://img.shields.io/github/last-commit/Oliver-Bilbie/learn-common-words)](https://github.com/Oliver-Bilbie/learn-common-words/blob/main/CHANGELOG.md)
 
 ---
@@ -9,7 +9,7 @@
 
 An endless quiz for learning the most common German words. Additional languages may follow in the future.
 
-### [Hosted here](https://learn-common-words.net)
+### [Hosted here](https://words.oliver-bilbie.co.uk)
 
 ---
 
