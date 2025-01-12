@@ -1,5 +1,6 @@
 region = "eu-west-1"
 service = "learn-common-words"
 environment = "prd"
-base_domain = "oliver-bilbie.co.uk"
-full_domain = "words.oliver-bilbie.co.uk"
+base_domain = "my-domain.com"
+full_domain = "words.my-domain.com"
+cert_arn = "arn:aws:acm:us-east-1:123456123456:certificate/a6f7e46c-0d13-4d9e-90d7-9b4e899f8cc9"
